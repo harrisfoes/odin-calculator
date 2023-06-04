@@ -1,0 +1,22 @@
+body {
+    margin:0px;
+    
+}
+
+div{ 
+    border: 1px solid gray;
+}   
+
+.maincontainer{
+    margin-top:20px;
+    height:75vh;
+    min-height:540px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.calculator{
+    width:350px;
+
+}
