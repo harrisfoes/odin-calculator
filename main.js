@@ -7,8 +7,10 @@ Display a snarky error message if the user tries to divide by 0… and don’t l
 
 const mainScreen = document.querySelector('.main_screen');
 const secScreen = document.querySelector('.history_display');
-let firstNum = 0;
-let secondNum;
+let currentNum = 0;
+let storedNum;
+let storedOperator = '';
+let reset = false;
 
 let btns = document.querySelectorAll('button');
 
@@ -17,7 +19,7 @@ function isANumber(str){
 }
 
 function notYetLimit(){
-    if(firstNum.toString().length >= 10)
+    if(currentNum.toString().length >= 10)
         return false;
     else    
         return true;
@@ -32,7 +34,7 @@ btns.forEach(function(i){
         //confirm if button pressed is number
         if(isANumber(i.id) && notYetLimit()){
             console.log("this is a number");
-            firstNum = recieveNumber(i.id);
+            currentNum = recieveNumber(i.id);
             refreshScreen();
         }
         else{
@@ -43,35 +45,93 @@ btns.forEach(function(i){
 });
 
 function refreshScreen(){
-    mainScreen.textContent = firstNum;
+    mainScreen.textContent = currentNum;
+}
+
+function refreshHistory(code){
+    switch(code){
+        case "opr":
+            secScreen.textContent = storedNum + " " + storedOperator;
+            break;
+        case "eq":
+            secScreen.textContent = storedNum + " " + storedOperator + " " + currentNum + " =";
+            break;
+        case "eqEarly":
+            secScreen.textContent = currentNum + " =";
+            break;
+        case "clear":
+            secScreen.textContent = '';
+            break;
+    }
 }
 
 function recieveNumber(num){
     //need to add limiter if already more than 11 digits
     //console.log(isLimit);
+    let retNum = currentNum;
 
-    let i = parseInt(num);
-    let retNum = firstNum;
-
-    if(retNum == 0)
-        retNum = i;
+    if(retNum == 0 || reset ){
+        retNum = num;
+        reset = false;
+        refreshHistory(clear);
+    }
     else{
-        retNum *= 10;
-        retNum += i;
+        retNum = parseFloat(retNum.toString() + num);
     }
 
     return retNum;
 }
 
+function resetValues(){
+            storedNum = 0;
+            storedOperator = '';  
+}
+
 function checkOperator(op){
     switch(op){
         case "clear": 
-            firstNum = 0;
+            currentNum = 0;
+            storedNum = 0;
+            storedOperator = '';
+            refreshHistory("clear");
             refreshScreen();
-        break;
+            break;
         
         case "delete":
-        
-        break;
+            const slicedNum = currentNum.toString().slice(0,-1);
+            if(slicedNum.length < 1)
+                currentNum = 0
+            else
+                currentNum = parseFloat(slicedNum);
+                refreshScreen();
+            break;
+
+        case "dec":
+            const decimalAdd = currentNum.toString() + ".";
+            currentNum = decimalAdd;
+            console.log(decimalAdd);
+            refreshScreen();
+            break;
+
+        case "add":
+            storedNum = currentNum;
+            currentNum = 0;
+            storedOperator = "+";
+            refreshHistory("opr");
+            break;
+
+        case "equal":
+            if(storedNum > 0 && storedOperator.length > 0){
+                refreshHistory("eq");
+                currentNum = parseFloat(storedNum) + parseFloat(currentNum);
+                refreshScreen();
+                resetValues();
+                reset = true;
+            }else if (currentNum > 0){
+                refreshHistory("eqEarly");
+            }
+            break;
+
+
     }
 }

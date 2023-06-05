@@ -19,10 +19,6 @@ body {
     color:var(--blue)
 }
 
-div{ 
-    //border: 1px solid gray;
-}   
-
 .maincontainer{
     margin-top:20px;
     height:75vh;
