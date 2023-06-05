@@ -1,22 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+
+:root{
+    --blue:#2176cc;
+    --melon:#ff7d6e;
+    --pink:#fca6ac;
+    --cream: #e8e7cb;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     margin:0px;
-    
+    font-family: 'Dosis', sans-serif;
+    font-size:40px;
+    background-color:var(--cream);
+    color:var(--blue)
 }
 
 div{ 
-    border: 1px solid gray;
+    //border: 1px solid gray;
 }   
 
 .maincontainer{
     margin-top:20px;
     height:75vh;
     min-height:540px;
+    min-width:400px;
     display:flex;
     justify-content:center;
     align-items:center;
+    margin-bottom:64px;
 }
 
 .calculator{
     width:350px;
+    border-radius: 1rem;
+    border: 1px solid var(--blue);
+    background-color: var(--blue);
+}
 
+.screen {
+    padding:16px;
+    border:1px solid gray;
+    margin:24px 24px 0px;
+    border-radius: 8px;
+    background-color: var(--pink);
+    text-align:right;
+}
+
+.history_display{
+    font-size:smaller;
+    min-height:44px;
+}
+
+.main_screen{
+    font-size:56px;
+}
+
+.buttoncontainer{
+    padding:16px;
+}
+
+.buttoncontainer div {
+    display:flex;
+    justify-content: space-evenly;
+    padding:4px;
+}
+
+button {
+    font-family:inherit;
+    font-size:smaller;
+    width:70px;
+    padding:2px;
+    height:auto;
+    background-color:var(--cream);
+    border-radius:100%;
+    border: 1px solid var(--blue);
+    color:var(--melon);
+}
+
+button:active{
+    background-color:var(--pink);
+    transform: translateY(2px);
+}
+
+.toprow button {
+    width:140px;
+    border-radius:30px;
+}
+
+footer {
+    font-size:30px;
+    font-weight:bold;
+}
+
+footer a {
+    text-decoration: none;
+    color:inherit;
+}
+
+footer img{
+    width:30px;
 }
